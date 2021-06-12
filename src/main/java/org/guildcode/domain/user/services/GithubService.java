@@ -7,13 +7,9 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.guildcode.application.shared.exception.ApplicationException;
-import org.guildcode.application.shared.exception.StatusCode;
-import org.guildcode.domain.shared.exception.DomainException;
 import org.guildcode.domain.user.GithubUser;
-import org.guildcode.infrastructure.data.rest.github.integration.ApiGithubResource;
 import org.guildcode.domain.user.integration.GithubResource;
-import org.guildcode.infrastructure.data.exceptions.IntegrationException;
+import org.guildcode.infrastructure.data.rest.github.integration.ApiGithubResource;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -38,9 +34,6 @@ public class GithubService {
 
     public Uni<GithubUser> getGithubUser(String githubToken) {
         return githubResource.getGithubUserToken(clientId, clientSecret, githubToken)
-                .onItem().transformToUni(githubResource::getUserInfoFromGithub)
-                .onFailure(IntegrationException.class)
-                .transform(notFound -> new ApplicationException((DomainException) notFound, StatusCode.NOT_FOUND));
-
+                .onItem().transformToUni(githubResource::getUserInfoFromGithub);
     }
 }
