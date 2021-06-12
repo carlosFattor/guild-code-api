@@ -29,8 +29,7 @@ public class TokenServiceImpl implements TokenService {
         return eventBus.<String>request(TokenGenerator.JWT_GENERATOR_CHANNEL, Json.encode(user))
                 .onItem()
                 .transform(data -> {
-                    var tokens = Json.decodeValue(data.body(), Tokens.class);
-                    return tokens;
+                    return Json.decodeValue(data.body(), Tokens.class);
                 });
     }
 }

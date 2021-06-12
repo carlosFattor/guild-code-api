@@ -4,6 +4,7 @@ import org.guildcode.application.shared.exception.ApplicationException;
 import org.guildcode.application.shared.exception.StatusCode;
 import org.guildcode.domain.shared.exception.ErrorCode;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -17,7 +18,7 @@ public class ContraintViolationExceptionFilter  implements ExceptionMapper<Const
     public Response toResponse(ConstraintViolationException exception) {
         List<String> validationMessages = exception.getConstraintViolations()
                 .stream()
-                .map(constraintViolation -> constraintViolation.getMessage())
+                .map(ConstraintViolation::getMessage)
                 .collect(Collectors.toList());
         var applicationException = new ApplicationException(validationMessages, ErrorCode.ENTRY_CONSTRAINT_VIOLATION.getCode(), StatusCode.UNPROCESSABLE, exception);
         return Response.status(422)

@@ -15,6 +15,7 @@ import org.guildcode.domain.user.repository.UserRepository;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Arrays;
+import java.util.Collections;
 
 @Slf4j
 @ApplicationScoped
@@ -39,7 +40,7 @@ public class UserService {
         user.setEmail(gitUser.getEmail());
         user.setName(gitUser.getName());
         if(CollectionUtils.isEmpty(user.getRoles())) {
-            user.setRoles(Arrays.asList(Role.USER));
+            user.setRoles(Collections.singletonList(Role.USER));
         }
         return user;
     }

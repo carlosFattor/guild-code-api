@@ -9,7 +9,7 @@ import java.util.function.Function;
 @UtilityClass
 public class ExceptionMapper {
 
-    public static final Function<Throwable, ApplicationException> apply() {
+    public static Function<Throwable, ApplicationException> apply() {
         return ex -> {
             if (ex instanceof ApplicationException) {
                 return (ApplicationException) ex;

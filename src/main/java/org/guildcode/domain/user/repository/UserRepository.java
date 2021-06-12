@@ -10,7 +10,7 @@ public interface UserRepository {
     Uni<User> findByEmail(String email);
     Uni<List<User>> findByLocation(Double lat, Double lng, int zoom);
 
-    List positions = List.of(
+    List<Double> positions = List.of(
             Double.parseDouble("10000"),
             Double.parseDouble("7000"),
             Double.parseDouble("5000"),

@@ -50,7 +50,5 @@ public class GithubUserService implements ReactiveService<AddGithubUserRequestDt
                 .onItem().transform(toResponse);
     }
 
-    Function<Tokens, ResponseResult> toResponse = tokens -> {
-        return new ResponseResult(ResponseStatus.OK, new AddGithubUserResponseDto(tokens));
-    };
+    Function<Tokens, ResponseResult> toResponse = tokens -> new ResponseResult(ResponseStatus.OK, new AddGithubUserResponseDto(tokens));
 }

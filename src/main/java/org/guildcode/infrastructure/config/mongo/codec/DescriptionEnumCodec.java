@@ -9,6 +9,7 @@ import org.guildcode.domain.shared.util.DescriptiveEnum;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DescriptionEnumCodec implements Codec<DescriptiveEnum> {
@@ -24,7 +25,7 @@ public class DescriptionEnumCodec implements Codec<DescriptiveEnum> {
     static DescriptiveEnum findByDescription(Class<DescriptiveEnum> enumerator, String description) {
         Map<String, DescriptiveEnum> map = ENUM_CACHE_DESCRIPTION.computeIfAbsent(enumerator, v -> new ConcurrentHashMap<>());
         return map.computeIfAbsent(description, v -> Arrays.stream(enumerator.getEnumConstants())
-                .filter(DescriptiveEnum.class::isInstance)
+                .filter(Objects::nonNull)
                 .map(DescriptiveEnum.class::cast)
                 .filter(descriptiveEnum -> descriptiveEnum.getDescription().equals(description))
                 .findAny()
