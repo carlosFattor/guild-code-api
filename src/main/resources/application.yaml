@@ -1,0 +1,85 @@
+"%test":
+  quarkus:
+    http:
+      port: 8080
+      so-reuse-port: true
+      tcp-quick-ack: true
+      tcp-cork: true
+      tcp-fast-open: true
+    vertx:
+      prefer-native-transport: true
+    mongodb:
+      connection-string: mongodb://127.0.0.1:27017
+      database: guild-code
+    log:
+      level: INFO
+      min-level: CONFIG
+      syslog:
+        async:
+          overflow: BLOCK
+    swagger-ui:
+      always-include: false
+
+  git:
+    client_id: "d3a25e9930e91076515c"
+    client_secret: "aa0337d0f101032cf1e38b11b7371c23aebb6647"
+    url_github_redirect: "https://github.com/login/oauth/authorize"
+
+  github/mp-rest/url: "https://github.com"
+  github/mp-rest/connectTimeout: 3000
+  github/mp-rest/readTimeout: 1000
+
+  github-api/mp-rest/url: "https://api.github.com"
+  github-api/mp-rest/connectTimeout: 3000
+  github-api/mp-rest/readTimeout: 1000
+
+  mp:
+    jwt:
+      verify:
+        publickey:
+          location: publickey.pem
+        issuer: https://guildcode.com
+
+"%dev":
+  quarkus:
+    http:
+      port: 8080
+      cors: true
+      so-reuse-port: true
+      tcp-quick-ack: true
+      tcp-cork: true
+      tcp-fast-open: true
+    vertx:
+      prefer-native-transport: true
+    mongodb:
+      connection-string: mongodb://127.0.0.1:27017
+      database: guild-code
+    log:
+      level: INFO
+      min-level: CONFIG
+      syslog:
+        async:
+          overflow: BLOCK
+    swagger-ui:
+      always-include: true
+    smallrye-jwt:
+      enabled: true
+  git:
+    client_id: "d3a25e9930e91076515c"
+    client_secret: "aa0337d0f101032cf1e38b11b7371c23aebb6647"
+    url_github_redirect: "https://github.com/login/oauth/authorize"
+
+  github/mp-rest/url: "https://github.com"
+  github/mp-rest/connectTimeout: 3000
+  github/mp-rest/readTimeout: 1000
+
+  github-api/mp-rest/url: "https://api.github.com"
+  github-api/mp-rest/connectTimeout: 3000
+  github-api/mp-rest/readTimeout: 1000
+
+  mp:
+    jwt:
+      verify:
+        publickey:
+          location: publickey.pem
+        issuer: https://guildcode.com
