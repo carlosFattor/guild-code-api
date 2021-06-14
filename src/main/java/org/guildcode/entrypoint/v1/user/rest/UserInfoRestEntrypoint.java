@@ -16,7 +16,7 @@ import org.guildcode.application.services.ServiceTag;
 import org.guildcode.application.services.github.add.dto.AddGithubUserResponseDto;
 import org.guildcode.application.services.user.info.UserInfoService;
 import org.guildcode.application.services.user.info.dto.UserInfoRequestDto;
-import org.guildcode.entrypoint.v1.user.InfoEntrypoint;
+import org.guildcode.entrypoint.v1.user.UserInfoEntrypoint;
 
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.RequestScoped;
@@ -39,7 +39,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 @Path("/api/v1/user")
-public class UserRestEntrypoint implements InfoEntrypoint {
+public class UserInfoRestEntrypoint implements UserInfoEntrypoint {
 
     @Inject
     UserInfoService userInfoService;
@@ -51,7 +51,7 @@ public class UserRestEntrypoint implements InfoEntrypoint {
     @PermitAll
     @Operation(summary = "Get user info logged")
     @APIResponse(responseCode = "200", description = "", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = AddGithubUserResponseDto.class)))
-    public Uni<Response> info() {
+    public Uni<Response> getInfo() {
         var email = jwt.<String>getClaim("email");
         var reqInfo = new UserInfoRequestDto(email);
         return userInfoService.handle(reqInfo)
