@@ -4,7 +4,7 @@ import io.smallrye.mutiny.Uni;
 
 import javax.ws.rs.core.Response;
 
-public interface GithubUserEntrypoint {
+public interface GithubLoginUserEntrypoint {
 
     Uni<Response> add(String code);
 
