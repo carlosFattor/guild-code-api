@@ -1,10 +1,11 @@
 package org.guildcode.domain.user;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.types.ObjectId;
 import org.guildcode.domain.enums.Role;
 
