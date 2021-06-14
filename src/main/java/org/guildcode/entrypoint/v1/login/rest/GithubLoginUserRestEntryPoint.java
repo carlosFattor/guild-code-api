@@ -16,10 +16,8 @@ import org.guildcode.application.services.ServiceTag;
 import org.guildcode.application.services.github.add.GithubUserService;
 import org.guildcode.application.services.github.add.dto.AddGithubUserRequestDto;
 import org.guildcode.application.services.github.add.dto.AddGithubUserResponseDto;
-import org.guildcode.application.services.token.refresh.RefreshTokenService;
-import org.guildcode.entrypoint.v1.login.GithubUserEntrypoint;
+import org.guildcode.entrypoint.v1.login.GithubLoginUserEntrypoint;
 
-import javax.annotation.security.RolesAllowed;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -37,7 +35,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 @Consumes(APPLICATION_JSON)
 @Produces(APPLICATION_JSON)
 @Path("")
-public class GithubUserRestEntryPoint implements GithubUserEntrypoint {
+public class GithubLoginUserRestEntryPoint implements GithubLoginUserEntrypoint {
 
     @ConfigProperty(name = "git.url_github_redirect")
     String url_github_redirect;
