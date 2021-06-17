@@ -1,4 +1,4 @@
-package org.guildcode.domain.user;
+package org.guildcode.domain.location;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

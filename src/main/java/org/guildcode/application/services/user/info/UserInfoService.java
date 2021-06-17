@@ -18,20 +18,31 @@ import org.guildcode.infrastructure.service.ReactiveService;
 import org.guildcode.infrastructure.service.result.ResponseResult;
 import org.guildcode.infrastructure.service.result.ResponseStatus;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Validator;
 import java.util.function.Function;
 
 @Slf4j
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@RequestScoped
+@ApplicationScoped
 public class UserInfoService implements ReactiveService<UserInfoRequestDto> {
 
+    @Inject
+    Validator validator;
     @Inject
     UserService userService;
 
     @Override
     public Uni<ResponseResult> handle(UserInfoRequestDto request) {
+
+        final var validationResults = validator.validate(request);
+
+        if (!validationResults.isEmpty()) {
+            return Uni.createFrom().failure(new ConstraintViolationException(validationResults));
+        }
+
         return userService.findByEmail(request.getEmail())
                 .onItem()
                 .transform(toResponse)

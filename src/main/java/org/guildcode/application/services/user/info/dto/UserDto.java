@@ -3,7 +3,7 @@ package org.guildcode.application.services.user.info.dto;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.guildcode.domain.enums.Role;
-import org.guildcode.domain.user.Location;
+import org.guildcode.domain.location.Location;
 
 import java.util.Collection;
 

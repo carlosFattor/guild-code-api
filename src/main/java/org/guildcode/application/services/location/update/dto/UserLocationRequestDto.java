@@ -4,8 +4,10 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
+import org.guildcode.infrastructure.config.rest.client.exception.ExtendedEmailValidator;
 import org.guildcode.infrastructure.service.dto.Dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -13,9 +15,11 @@ import javax.validation.constraints.NotNull;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserLocationRequestDto implements Dto {
 
-    @NotNull
-    Double lat;
+    @ExtendedEmailValidator
+    @NotNull(message = "the Email is necessary")
+    String email;
 
-    @NotNull
-    Double lng;
+    @Valid
+    @NotNull(message = "the Location is necessary")
+    LocationRequestDto location;
 }
