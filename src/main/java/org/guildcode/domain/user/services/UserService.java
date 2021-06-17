@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.guildcode.application.shared.exception.ApplicationException;
-import org.guildcode.application.shared.exception.StatusCode;
 import org.guildcode.domain.enums.Role;
-import org.guildcode.domain.shared.exception.DomainException;
 import org.guildcode.domain.user.GithubUser;
 import org.guildcode.domain.user.User;
 import org.guildcode.domain.user.mapper.UserMapper;
@@ -55,6 +52,7 @@ public class UserService {
     }
 
     public Uni<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email)
+                .onItem().ifNull().failWith(UserNotFoundException::new);
     }
 }

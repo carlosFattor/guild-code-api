@@ -1,9 +1,11 @@
 package org.guildcode.entrypoint.v1.geolocation;
 
-import io.quarkus.vertx.web.RoutingExchange;
-import org.guildcode.application.services.location.update.dto.UserLocationRequestDto;
+import io.smallrye.mutiny.Uni;
+import org.guildcode.application.services.location.update.dto.LocationRequestDto;
+
+import javax.ws.rs.core.Response;
 
 public interface LocationEntryPoint {
 
-    void update(RoutingExchange re, UserLocationRequestDto req);
+    Uni<Response> update(LocationRequestDto location);
 }

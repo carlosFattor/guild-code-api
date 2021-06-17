@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.bson.types.ObjectId;
 import org.guildcode.domain.enums.Role;
+import org.guildcode.domain.location.Location;
 
 import java.util.Collection;
 

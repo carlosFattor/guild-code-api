@@ -16,7 +16,7 @@ import org.guildcode.domain.user.User;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@MongoEntity(collection = "sacola")
+@MongoEntity(collection = "users")
 public class UserEntity extends User {
 
     @BsonId

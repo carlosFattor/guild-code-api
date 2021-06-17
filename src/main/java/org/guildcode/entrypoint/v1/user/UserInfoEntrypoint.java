@@ -4,7 +4,7 @@ import io.smallrye.mutiny.Uni;
 
 import javax.ws.rs.core.Response;
 
-public interface InfoEntrypoint {
+public interface UserInfoEntrypoint {
 
-    Uni<Response> info();
+    Uni<Response> getInfo();
 }
