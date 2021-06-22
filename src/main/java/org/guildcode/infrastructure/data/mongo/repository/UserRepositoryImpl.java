@@ -7,6 +7,7 @@ import org.guildcode.infrastructure.data.mongo.mapper.UserEntityMapper;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.List;
 
 @ApplicationScoped
@@ -43,5 +44,13 @@ public class UserRepositoryImpl implements UserRepository, MongoUserRepository {
     public Uni<Void> update(User user) {
         var userEntity = userEntityMapper.map(user);
         return persistOrUpdate(userEntity);
+    }
+
+    @Override
+    public Uni<Long> updateTags(String email, Collection<String> tags) {
+        var query = "{'email': ?1}";
+        var update = "{$set: {'tags': [?1]}}";
+
+        return update(update, tags).where(query, email);
     }
 }

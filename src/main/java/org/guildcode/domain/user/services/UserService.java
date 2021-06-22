@@ -15,6 +15,7 @@ import org.guildcode.infrastructure.data.exceptions.UserNotFoundException;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.Collections;
 
 @Slf4j
@@ -53,6 +54,11 @@ public class UserService {
 
     public Uni<User> findByEmail(String email) {
         return userRepository.findByEmail(email)
+                .onItem().ifNull().failWith(UserNotFoundException::new);
+    }
+
+    public Uni<Long> updateUserTags(String email, Collection<String> tags) {
+        return userRepository.updateTags(email, tags)
                 .onItem().ifNull().failWith(UserNotFoundException::new);
     }
 }
