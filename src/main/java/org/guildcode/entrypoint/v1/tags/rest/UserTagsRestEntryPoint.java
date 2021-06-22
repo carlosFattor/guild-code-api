@@ -6,9 +6,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.media.Content;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.opentracing.Traced;
 import org.guildcode.application.services.ServiceTag;
+import org.guildcode.application.services.location.dto.LocationRequestDto;
 import org.guildcode.application.services.user.tag.TagService;
 import org.guildcode.application.services.user.tag.dto.TagRequestDto;
 import org.guildcode.application.services.user.tag.dto.UserTagRequestDto;
@@ -42,6 +48,10 @@ public class UserTagsRestEntryPoint implements UserTagsEntryPoint {
 
     @Override
     @PUT
+    @Operation(summary = "Update location from user logged")
+    @RequestBody(content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = TagRequestDto.class)))
+    @APIResponse(responseCode = "200", description = "User tags updated with success")
+    @APIResponse(responseCode = "422", description = "It was not possible to update user tag's.")
     public Uni<Response> updateUserTags(TagRequestDto tags) {
 
         var email = jwt.<String>getClaim("email");
