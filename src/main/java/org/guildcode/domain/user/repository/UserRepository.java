@@ -3,6 +3,7 @@ package org.guildcode.domain.user.repository;
 import io.smallrye.mutiny.Uni;
 import org.guildcode.domain.user.User;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface UserRepository {
@@ -33,4 +34,6 @@ public interface UserRepository {
     );
 
     Uni<Void> update(User user);
+
+    Uni<Long> updateTags(String email, Collection<String> tags);
 }
