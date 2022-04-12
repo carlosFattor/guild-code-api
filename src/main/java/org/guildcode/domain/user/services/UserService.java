@@ -1,5 +1,6 @@
 package org.guildcode.domain.user.services;
 
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,9 @@ public class UserService {
     public Uni<Long> updateUserTags(String email, Collection<String> tags) {
         return userRepository.updateTags(email, tags)
                 .onItem().ifNull().failWith(UserNotFoundException::new);
+    }
+
+    public Multi<User> findUsersByLocation(Double lng, Double lat, int zoom) {
+        return userRepository.findByLocation(lng, lat, zoom);
     }
 }

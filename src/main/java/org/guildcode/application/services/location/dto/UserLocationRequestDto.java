@@ -1,4 +1,4 @@
-package org.guildcode.application.services.location.update.dto;
+package org.guildcode.application.services.location.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

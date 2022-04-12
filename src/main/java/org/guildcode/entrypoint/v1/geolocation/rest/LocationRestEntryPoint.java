@@ -1,6 +1,7 @@
 package org.guildcode.entrypoint.v1.geolocation.rest;
 
 
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +16,20 @@ import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.eclipse.microprofile.opentracing.Traced;
 import org.guildcode.application.services.ServiceTag;
+import org.guildcode.application.services.github.add.dto.AddGithubUserResponseDto;
+import org.guildcode.application.services.location.dto.FindLocationRequestDto;
+import org.guildcode.application.services.location.dto.UserLocationResponseDto;
+import org.guildcode.application.services.location.find.UserLocationService;
 import org.guildcode.application.services.location.update.UpdateUserLocationService;
-import org.guildcode.application.services.location.update.dto.LocationRequestDto;
-import org.guildcode.application.services.location.update.dto.UserLocationRequestDto;
+import org.guildcode.application.services.location.dto.LocationRequestDto;
+import org.guildcode.application.services.location.dto.UserLocationRequestDto;
 import org.guildcode.entrypoint.v1.geolocation.LocationEntryPoint;
 
 import javax.annotation.security.PermitAll;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -43,9 +46,11 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class LocationRestEntryPoint implements LocationEntryPoint {
 
     @Inject
+    JsonWebToken jwt;
+    @Inject
     UpdateUserLocationService updateUserLocationService;
     @Inject
-    JsonWebToken jwt;
+    UserLocationService userLocationService;
 
     @Override
     @POST
@@ -60,6 +65,19 @@ public class LocationRestEntryPoint implements LocationEntryPoint {
         return updateUserLocationService.handle(new UserLocationRequestDto(email, location))
                 .map(data -> Response
                         .status(data.getStatus().toNumber())
+                        .build());
+    }
+
+    @Override
+    @GET
+    @Path("/users")
+    @APIResponse(responseCode = "200", description = "", content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = UserLocationResponseDto.class)))
+    @APIResponse(responseCode = "422", description = "It was not possible to find users using location.")
+    public Multi<Response> findByLatLng(@QueryParam("lng") Double lng, @QueryParam("lat") Double lat, @QueryParam("zoom") int zoom) {
+        return userLocationService.handle(new FindLocationRequestDto(lng, lat, zoom))
+                .onItem().transform(data -> Response
+                        .status(data.getStatus().toNumber())
+                        .entity(data.getResponse())
                         .build());
     }
 }

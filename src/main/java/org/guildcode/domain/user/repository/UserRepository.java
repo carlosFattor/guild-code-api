@@ -1,5 +1,6 @@
 package org.guildcode.domain.user.repository;
 
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.guildcode.domain.user.User;
 
@@ -9,7 +10,7 @@ import java.util.List;
 public interface UserRepository {
 
     Uni<User> findByEmail(String email);
-    Uni<List<User>> findByLocation(Double lat, Double lng, int zoom);
+    Multi<User> findByLocation(Double lng, Double lat, int zoom);
 
     List<Double> positions = List.of(
             Double.parseDouble("10000"),

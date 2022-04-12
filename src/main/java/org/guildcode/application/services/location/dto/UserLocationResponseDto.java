@@ -1,4 +1,4 @@
-package org.guildcode.application.services.user.info.dto;
+package org.guildcode.application.services.location.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,6 +10,6 @@ import org.guildcode.infrastructure.service.dto.Dto;
 @Data
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class UserInfoResponseDto implements Dto {
-    UserDto userInfo;
+public class UserLocationResponseDto implements Dto {
+    UserDto userDto;
 }

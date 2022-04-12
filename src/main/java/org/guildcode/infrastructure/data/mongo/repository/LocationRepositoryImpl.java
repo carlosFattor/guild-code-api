@@ -8,6 +8,9 @@ import javax.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class LocationRepositoryImpl implements LocationRepository, MongoUserRepository {
+
+    private Double EARTH_RADIUS_MILE = Double.parseDouble("3963.2");
+
     @Override
     public Uni<Long> updateLocationByEmail(String email, Location location) {
         var query = "{'email': ?1}";

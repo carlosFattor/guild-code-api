@@ -1,4 +1,4 @@
-package org.guildcode.application.services.user.info.dto;
+package org.guildcode.application.services.shared.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;

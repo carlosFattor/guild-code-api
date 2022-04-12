@@ -4,7 +4,7 @@ import io.smallrye.mutiny.Uni;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.guildcode.application.services.location.update.dto.UserLocationRequestDto;
+import org.guildcode.application.services.location.dto.UserLocationRequestDto;
 import org.guildcode.application.shared.exception.ApplicationException;
 import org.guildcode.application.shared.exception.StatusCode;
 import org.guildcode.domain.location.Location;

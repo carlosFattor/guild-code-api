@@ -1,5 +1,6 @@
 package org.guildcode.infrastructure.data.mongo.repository;
 
+import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import org.guildcode.domain.user.User;
 import org.guildcode.domain.user.repository.UserRepository;
@@ -8,7 +9,6 @@ import org.guildcode.infrastructure.data.mongo.mapper.UserEntityMapper;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.Collection;
-import java.util.List;
 
 @ApplicationScoped
 public class UserRepositoryImpl implements UserRepository, MongoUserRepository {
@@ -29,15 +29,14 @@ public class UserRepositoryImpl implements UserRepository, MongoUserRepository {
     }
 
     @Override
-    public Uni<List<User>> findByLocation(final Double lat, final Double lng, final int zoom) {
-        var zoomP = (Double)positions.get(zoom);
+    public Multi<User> findByLocation(final Double lng, final Double lat, final int zoom) {
+        var zoomP = (Double) positions.get(zoom);
         var radius = zoomP / DEFAULT_VALUE;
-        var query = "{location: { $geoWithin: { $centerSphere: [[?1, ?2], ?3] } }}";
+        var query = "{location: { $geoWithin: { $centerSphere: [[?1, ?2], ?3] }}}";
 
         return find(query, lng, lat, radius)
-                .list()
-                .onItem()
-                .transform(userEntityMapper::map);
+                .stream()
+                .map(userEntityMapper::map);
     }
 
     @Override
